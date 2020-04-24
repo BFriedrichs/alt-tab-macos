@@ -34,20 +34,19 @@ class App: NSApplication, NSApplicationDelegate {
         #if !DEBUG
         PFMoveToApplicationsFolderIfNecessary()
         #endif
-        SystemPermissions.ensureAccessibilityCheckboxIsChecked()
-        SystemPermissions.ensureScreenRecordingCheckboxIsChecked()
         Preferences.migratePreferences()
         Preferences.registerDefaults()
-        statusItem = Menubar.make()
-        loadMainMenuXib()
-        thumbnailsPanel = ThumbnailsPanel()
+        self.statusItem = Menubar.make()
+        self.loadMainMenuXib()
+        self.thumbnailsPanel = ThumbnailsPanel()
         Spaces.initialDiscovery()
         Applications.initialDiscovery()
-        KeyboardEvents.observe()
-        loadPreferencesWindow()
+        self.loadPreferencesWindow()
         // TODO: undeterministic; events in the queue may still be processing; good enough for now
         DispatchQueue.main.async { () -> () in Windows.sortByLevel() }
-        preloadWindows()
+        self.preloadWindows()
+        SystemPermissions.ensureAccessibilityCheckboxIsChecked
+        //        SystemPermissions.ensureScreenRecordingCheckboxIsChecked()
     }
 
     // pre-load some windows so they are faster on first display
